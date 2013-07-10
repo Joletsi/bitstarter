@@ -21,7 +21,9 @@ References:
    - https://developer.mozilla.org/en-US/docs/JSON#JSON_in_Firefox_2
 */
 
+var sys = require('util');
 var fs = require('fs');
+var rest = require('restler');
 var program = require('commander');
 var cheerio = require('cheerio');
 var HTMLFILE_DEFAULT = "index.html";
@@ -55,6 +57,17 @@ var checkHtmlFile = function(htmlfile, checksfile) {
     return out;
 };
 
+var checkUrlContent = function(urlcontent, checksfile) {
+    $ = cheerio.load(urlcontent);
+    var checks = loadChecks(checksfile).sort();
+    var out = {};
+    for(var jj in checks) {
+	var present = $(checks[jj]).length > 0;
+	out[checks[jj]] = present;
+    }
+    return out;
+};
+
 var clone = function(fn) {
     // Workaround for commander.js issue.
     // http://stackoverflow.com/a/6772648
@@ -65,10 +78,28 @@ if(require.main == module) {
     program
         .option('-c, --checks <check_file>', 'Path to checks.json', clone(assertFileExists), CHECKSFILE_DEFAULT)
         .option('-f, --file <html_file>', 'Path to index.html', clone(assertFileExists), HTMLFILE_DEFAULT)
-        .parse(process.argv);
-    var checkJson = checkHtmlFile(program.file, program.checks);
-    var outJson = JSON.stringify(checkJson, null, 4);
-    console.log(outJson);
+        .option('-u, --url <url_address>', 'URL to check')
+	.parse(process.argv);
+
+    if(program.url) {
+	rest.get(program.url).on('complete', function(result) {
+	    if (result instanceof Error) {
+		sys.puts('Error: ' + result.message);
+		this.retry(5000); // try again after 5 sec
+	    } else {
+		var content = result;
+		var checkJson = checkUrlContent(content, program.checks);
+		var outJson = JSON.stringify(checkJson, null, 4);
+		console.log(outJson);
+	    }
+	});
+
+    }
+    else {
+	var checkJson = checkHtmlFile(program.file, program.checks);
+	var outJson = JSON.stringify(checkJson, null, 4);
+	console.log(outJson);
+    }
 } else {
     exports.checkHtmlFile = checkHtmlFile;
 }
