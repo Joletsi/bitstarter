@@ -106,7 +106,8 @@
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
-          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+          <button type="button" class="btn btn-navbar" 
+          data-toggle="collapse" data-target=".nav-collapse">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -123,8 +124,75 @@
       </div>
     </div>
 
+    <!-- We use row-fluid inside containers to achieve a resizable layout. -->
+    <!-- some urls i don't want to type out -->
+    <!-- and some -->
+    <div class="container">
+      <!-- Font and paired font of .heading/.sub and body from Google Fonts (Ubuntu) -->
+      <!-- -->
+      <!-- -->
+      <div class="row-fluid heading">
+        <div class="span12">
+          <h1>Product</h1>
+        </div>
+      </div>
+      <div class="row-fluid subheading">
+        <div class="span12">
+          <!-- Special typography from Bootstrap for lead paragraph. -->
+          <!-- http://twitter.github.io/bootstrap/base-css.html#typography -->
+          <p class="lead">One sentence description</p>
+        </div>
+      </div>
+      <div class="row-fluid pitch">
+        <div class="span5 offset1 video">
+          <img class="img-polaroid" src="http://placehold.it/480x300">
+        </div>
 
-
+        <!-- We define new a new 'actions' div to contain stats, order and share buttons. -->
+        <div class="span5 actions">
+          <div class="span8 offset2">
+            <div class="statistics">
+              <div class="span4">
+                <!-- linediv-l and linediv-r give dividing lines that look 
+                different in horizontal and vertical layouts, illustrating 
+                media queries. -->
+                <div class="linediv-l">
+                  <h3>1000</h3> <p>backers</p>
+                </div>
+              </div>
+                <div class="span4">
+                  <div class="linediv-c">
+                    <h3>$6000</h3> <p>of $10,000</p>
+                  </div>
+                </div>
+                <div class="span4">
+                  <div class="linediv-r">
+                    <h3>10</h3> <p>days left</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="span10 offset1">
+              <!-- Bootstrap progress bar-->
+              <!-- github.io -->
+              <div class="thermometer progress active">
+                <div class="bar bar-success" style="width: 60%;"></div>
+                <div class="bar bar-warning" style="width: 40%;"></div>
+              </div>
+            </div>
+            <div class="span6 offset3 order">
+              <!--Standard bootstrap button-->
+              <!-- URL -->
+              <button class="btn btn-success btn-large">Preorder</button>
+            </div>
+            <div class="span8 offset2 social">
+              <!--Social buttons not included by default in bootstrap -->
+              <!--noizwaves.github.io-->
+              <button class="btn btn-twitter"><i class="icon-twitter"></i> | Twitter</button>
+              <button class="btn btn-facebook"><i class="icon-facebook"></i> | Facebook</button>
+            </div>
+          </div>
+        </div>
 
   </body>
 </html>
